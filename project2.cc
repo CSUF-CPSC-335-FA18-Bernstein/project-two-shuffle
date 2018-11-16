@@ -90,7 +90,16 @@ void merge(string_vector & strings, size_t start, size_t mid, size_t end) {
 // the two parts together using the merge() method.
 //-----------------------------------------------------------------------------
 void mergesort(string_vector & strings, size_t start, size_t end) {
-  // TODO: implement this function, then delete this comment
+  //handle the base case
+  if (start == end) {
+    return;
+  }
+  
+  int mid = (start+end)/2 + 1;
+  mergesort(strings, start, mid-1);
+  mergesort(strings, mid, end);
+  merge(strings, start, mid, end);
+  
   return;
 }
 
