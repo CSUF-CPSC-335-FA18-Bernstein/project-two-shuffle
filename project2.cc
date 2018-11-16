@@ -19,17 +19,67 @@
 using namespace std;
 
 
+void swapStrings(string_vector & strings, int i1, int i2) {
+  string temp = strings[i1];
+  strings[i1] = strings[i2];
+  strings[i2] = temp;
+  return;
+}
+
 //-----------------------------------------------------------------------------
 // Randomize the order of all items in the list
 //-----------------------------------------------------------------------------
 void randomize_list(string_vector & strings) {
-  // TODO: implement this function, then delete this comment
+  string temp;
+  int randNum, i;
+  int maxSize = strings.size();
+  srand(time(NULL)); //seeds the RNG with the current unix time
+
+  for (i = 0; i < maxSize; i++) {
+    randNum = rand() % maxSize;
+    swapStrings(strings, i, randNum);
+  }
+	
   return;
 }
 
 //-----------------------------------------------------------------------------
 void merge(string_vector & strings, size_t start, size_t mid, size_t end) {
-  // TODO: implement this function, then delete this comment
+  int i;
+  int size = end-start+1;
+  int readFromLeft = start;
+  int readFromRight = mid;
+  string stage[size];
+  
+  for (i = 0; i < size; i++){
+    if(strings[readFromLeft] < strings[readFromRight]) {
+      stage[i] = strings[readFromLeft++];
+    }
+    else {
+      stage[i] = strings[readFromRight++];
+    }
+
+    //Check if we've exhausted all the elements from the left or the right
+    //if so, copy the rest from the other side and exit the loop
+    if(readFromLeft >= mid){
+      for(++i; i < size; i++){
+	stage[i] = strings[readFromRight++];
+      }
+      break;
+    }
+    else if(readFromRight > end) {
+      for(++i; i < size; i++){
+	stage[i] = strings[readFromLeft++];
+      }
+      break;
+    }
+  }
+
+  //now copy back the strings from stage to the original vector
+  for(i = 0; i<size; i++){
+    strings[start+i] = stage[i];
+  }
+  
   return;
 }
 
