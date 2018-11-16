@@ -110,8 +110,30 @@ void mergesort(string_vector & strings, size_t start, size_t end) {
 // It returns the index of the final position of the pivot value.
 //-----------------------------------------------------------------------------
 int hoare_partition(string_vector & strings, int start, int end) {
-  // TODO: implement this function, then delete this comment
-  return 0;
+  //can't partition an array of size 1
+  if(start == end){
+    return 0;
+  }
+
+  string pivot = strings[start];
+  int i = start+1;
+  int j = end;
+
+  while(i<j){
+    while((i<end) && (strings[i] < pivot)){
+      i++;
+    }
+
+    while((j>start+1) && (strings[j] > pivot)){    
+      j--;
+    }
+
+    swapStrings(strings, i, j);
+  }
+
+  swapStrings(strings, i, j);
+  swapStrings(strings, j, start);
+  return j;
 }
 
 //-----------------------------------------------------------------------------
