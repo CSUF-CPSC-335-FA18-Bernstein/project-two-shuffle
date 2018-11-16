@@ -15,6 +15,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -116,21 +117,22 @@ int hoare_partition(string_vector & strings, int start, int end) {
   }
 
   string pivot = strings[start];
-  int i = start+1;
+  int i = start;
   int j = end;
 
   while(i<j){
-    while((i<end) && (strings[i] < pivot)){
+    while((i<end) && (strings[i] <= pivot)){
       i++;
     }
 
-    while((j>start+1) && (strings[j] > pivot)){    
+    while((j>start) && (strings[j] > pivot)){    
       j--;
     }
 
     swapStrings(strings, i, j);
   }
 
+  //Undo the last swap and then swap the partition into the correct spot
   swapStrings(strings, i, j);
   swapStrings(strings, j, start);
   return j;
@@ -143,7 +145,13 @@ int hoare_partition(string_vector & strings, int start, int end) {
 // the two parts together using the merge() method.
 //-----------------------------------------------------------------------------
 void quicksort(string_vector & strings, int start, int end) {
-  // TODO: implement this function, then delete this comment
+  //Handle the base case
+  if(start < end){
+    int partition = hoare_partition(strings, start, end);
+    quicksort(strings, start, partition-1);
+    quicksort(strings, partition+1, end);
+  }
+
   return;
 }
 
@@ -206,7 +214,9 @@ void quicksort(string_vector & strings) {
   if (strings.size() == 0) {
     return;
   }
+
   quicksort(strings, 0, strings.size() - 1);
+
   return;
 }
 
