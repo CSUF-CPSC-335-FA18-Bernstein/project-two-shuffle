@@ -17,6 +17,7 @@
 
 using namespace std;
 
+//Helper function to get a subset of all the words
 string_vector getSubset(string_vector words,int start,int size){
   //make sure we don't go off the edge of the words vector
   if((start + size) > words.size()-1){
@@ -25,6 +26,7 @@ string_vector getSubset(string_vector words,int start,int size){
 
   return string_vector(words.begin() + start, words.begin() + start + size);
 }
+
 
 int main() {
 
@@ -47,7 +49,8 @@ int main() {
     
   cout << "Words=" << n << ", "<< "iteration=" << iterations << endl;
   cout << "Iteration,\tMergeTime,\tQSTime" << endl;
-  
+
+  //Run the experiment and gather timing data
   for(i = 0; i < iterations; i++){
     cout << i << ",\t";
     
@@ -68,10 +71,11 @@ int main() {
     quicksort(n_words);
     elapsed[i][1] = timer.elapsed();
     cout << elapsed[i][1] << endl;
-      }
+    }
 
   double sumMerge, sumQuick, meanMerge, meanQuick, stdMerge, stdQuick = 0.0;
 
+  //From here on we are calculating population parameters for this experiment
   for(i = 0; i < iterations; i++){
     sumMerge += elapsed[i][0];
     sumQuick += elapsed[i][1];
