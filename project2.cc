@@ -15,11 +15,10 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <iostream>
 
 using namespace std;
 
-
+//Helper function to swap two elements of a string_vector
 void swapStrings(string_vector & strings, int i1, int i2) {
   string temp = strings[i1];
   strings[i1] = strings[i2];
@@ -132,7 +131,8 @@ int hoare_partition(string_vector & strings, int start, int end) {
     swapStrings(strings, i, j);
   }
 
-  //Undo the last swap and then swap the partition into the correct spot
+  //Undo the last swap(in case i and j passed each other)
+  //and then swap the partition into the correct spot
   swapStrings(strings, i, j);
   swapStrings(strings, j, start);
   return j;
